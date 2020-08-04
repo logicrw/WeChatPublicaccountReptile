@@ -17,7 +17,7 @@ def str_to_dict(headers):
             d_headers[k] = v.strip()
     return d_headers
 
-
+## 获取指定字段信息
 def sub_dict(d, keys):
     return {k: html.unescape(d[k]) for k in d if k in keys}
 

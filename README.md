@@ -10,6 +10,15 @@
 
 
 
+### :chart_with_downwards_trend:需求：
+
+- 爬取【四川大学锦江学院*公众号】全部历史文章数据
+- 将爬取的文章数据本地持久化存储到MongoDB数据库中[python中的ORM框架：pip install mongoengine]
+- 获取文章的阅读数、点赞数、评论数等
+- Matplotlib数据可视化展示
+
+
+
 ### :bug:爬取目标: 
 
 - 四川大学锦江学院【公众号】
