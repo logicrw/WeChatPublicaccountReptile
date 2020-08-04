@@ -5,17 +5,19 @@
 import logging
 import utils
 import requests
+import time
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class SCUJinjiangCollege:
-    def crawl(self):
+
+    def crawl(self, offset=0):
         """
         更多历史消息文章
         :return:
         """
-        url = "https://mp.weixin.qq.com/mp/profile_ext?action=getmsg&__biz=MzA3NTY3NjUzMg==&f=json&offset=21&count=10&is_ok=1&scene=124&uin=MzAzMDI4NDA4OQ%3D%3D&key=1682b2315ca9ee490093bfa995607ed42db8b3e564d9c1d195dd1a11cfc8ac85e7083817ff8d8d8b13e283c015b191b6bcb2021562c8964a270bc4dce67ed2e9e56d0f35c5bbfa349ef7b63451602810&pass_ticket=ZaU5UjhVDMVvsOzkK4i3B%2FjZubj7dI36zAoLaLuE52eYyRmdeP68%2BFfs6uiXclfr&wxtoken=&appmsg_token=1072_IS8epv81t7o7rdJHPiOknOLxKrEuyI3U5AmwbQ~~&x5=0&f=json"
+        url = "https://mp.weixin.qq.com/mp/profile_ext?action=getmsg&__biz=MzA3NTY3NjUzMg==&f=json&offset={offset}&count=10&is_ok=1&scene=124&uin=MzAzMDI4NDA4OQ%3D%3D&key=1682b2315ca9ee490093bfa995607ed42db8b3e564d9c1d195dd1a11cfc8ac85e7083817ff8d8d8b13e283c015b191b6bcb2021562c8964a270bc4dce67ed2e9e56d0f35c5bbfa349ef7b63451602810&pass_ticket=ZaU5UjhVDMVvsOzkK4i3B%2FjZubj7dI36zAoLaLuE52eYyRmdeP68%2BFfs6uiXclfr&wxtoken=&appmsg_token=1072_IS8epv81t7o7rdJHPiOknOLxKrEuyI3U5AmwbQ~~&x5=0&f=json".format(offset=offset)
         headers = """Host: mp.weixin.qq.com
 Connection: keep-alive
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36 QBCore/4.0.1301.400 QQBrowser/9.0.2524.400 Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2875.116 Safari/537.36 NetType/WIFI MicroMessenger/7.0.5 WindowsWechat
@@ -30,7 +32,12 @@ Cookie: rewardsn=; wxtokenkey=777; wxuin=3030284089; devicetype=android-27; vers
         result = response.json()
         if result.get("ret") == 0:
             msg_list = result.get("general_msg_list")
-            logger.info("抓取数据: offset=%s, data=%s" % (21, msg_list))
+            logger.info("抓取数据: offset=%s, data=%s" % (offset, msg_list))
+            has_next = result.get("can_msg_continue")
+            if has_next == 1:
+                next_offset = result.get("next_offset")
+                time.sleep(3)
+                self.crawl(next_offset)
         else:
             # 错误消息
             logger.error("错误消息，请检查请求头")
