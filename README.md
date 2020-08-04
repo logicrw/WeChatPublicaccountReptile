@@ -17,6 +17,10 @@
 - 获取文章的阅读数、点赞数、评论数等
 - Matplotlib数据可视化展示
 
+通过MongoExport工具，将爬取到的数据保存到MongoDB的数据导出为csv文件。
+
+可在项目查看到wechat.csv，这就是最终的爬取的数据集合。
+
 
 
 ### :bug:爬取目标: 
@@ -33,7 +37,9 @@
 - 获取四川大学锦江学院全部的历史记录
 - 关于Windows版微信如何进入公众号的全部历史界面和相关Fiddler关键位置抓包截图可参考doc下的截图文件
 
-
+> windows下启动MongoDB服务：cmd -> mongod
+>
+> 如果是启动客户端： cmd -> mongo
 
 :stuck_out_tongue:软件和工具：
 
@@ -41,6 +47,7 @@
 - 抓包Fiddler
 - WeChat【Windows版】
 - JSON-handle【json格式化预览插件 ……Chrome版】
+- Robo3T 【MongoDB可视化工具】
 
 ------
 
